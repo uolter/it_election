@@ -1,4 +1,4 @@
-from pymongo import Connection
+from pymongo import Connection, ASCENDING, DESCENDING
 from datetime import datetime
 import settings
 import logging
