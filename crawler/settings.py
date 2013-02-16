@@ -26,7 +26,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 fh.setFormatter(formatter)
 	
 
-search_for = ['apple', 'microsoft']
+search_for = ['bersani', 'berlusconi', 'grillo', 'monti', 'vendola']
 
 # mongodb.
 if os.environ['OPENSHIFT_MONGODB_DB_HOST'] and os.environ['OPENSHIFT_MONGODB_DB_PORT']:
