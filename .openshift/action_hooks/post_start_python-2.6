@@ -12,14 +12,3 @@
 # prevent your application from stopping cleanly or starting at all.
 # Application start and stop is subject to different timeouts
 # throughout the system.
-
-
-# Installs Python dependencies
-if [ -f ${OPENSHIFT_REPO_DIR}requirements.txt ];
-then
-    cd ${OPENSHIFT_RUNTIME_DIR}
-    echo "pip install -r requirements.txt ..."
-    rm -fR ${OPENSHIFT_RUNTIME_DIR}src
-    pip install -r ${OPENSHIFT_REPO_DIR}requirements.txt \
-                --log ${OPENSHIFT_LOG_DIR}pip.log
-fi
