@@ -13,6 +13,5 @@ then
     cd ${OPENSHIFT_RUNTIME_DIR}
     echo "pip install -r requirements.txt ..."
     rm -fR ${OPENSHIFT_RUNTIME_DIR}src
-    pip install -r ${OPENSHIFT_REPO_DIR}requirements.txt \
-                --log ${OPENSHIFT_LOG_DIR}pip.log
+    pip install -r ${OPENSHIFT_REPO_DIR}requirements.txt                
 fi
