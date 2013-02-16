@@ -22,7 +22,7 @@ def save(name, speed, acceleration):
 		})
 
 	
-		db.create_index([("date", DESCENDING), ("name", ASCENDING)])
+		db.record.create_index([("date", DESCENDING), ("name", ASCENDING)])
 
 	except Exception, e:
 
