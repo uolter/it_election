@@ -24,14 +24,14 @@ fh.setFormatter(formatter)
 search_for = ['apple', 'microsoft']
 
 # mongodb.
-if os.env['OPENSHIFT_MONGODB_DB_HOST'] and os.env['OPENSHIFT_MONGODB_DB_PORT']:
-	mongodb_host = os.env['OPENSHIFT_MONGODB_DB_HOST']
-	mongodb_port = os.env['OPENSHIFT_MONGODB_DB_PORT']
+if os.environ['OPENSHIFT_MONGODB_DB_HOST'] and os.environ['OPENSHIFT_MONGODB_DB_PORT']:
+	mongodb_host = os.environ['OPENSHIFT_MONGODB_DB_HOST']
+	mongodb_port = int(os.environ['OPENSHIFT_MONGODB_DB_PORT'])
 else:
 	mongodb_host = 'localhost'
 	mongodb_port = 27017
 
-
+"""
 
 MongoDB 2.2 database added.  Please make note of these credentials:
 
@@ -40,4 +40,5 @@ MongoDB 2.2 database added.  Please make note of these credentials:
    Database Name: electionspeed
 
 Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
-	
+
+"""	
