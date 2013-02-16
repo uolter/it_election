@@ -12,7 +12,12 @@ consumer_secret = 'DSfhhVcMVI0AAfCumYWECyO9J6Ikagy7cjPmYcazU'
 access_token = '32822337-BXc7x6zQ9j72rugwHKHFgFDmuyJSVjOITplZHY5vx'
 access_token_secret = '8JIvAPV6GgGm2VjcpZWolMs7XdvviH4FAFgHl0wRUHM'
 
-fh = logging.FileHandler('twitter_speed.log')
+if os.environ['OPENSHIFT_PYTHON_LOG_DIR']:
+	fh = logging.FileHandler('%stwitter_speed.log' %os.environ['OPENSHIFT_PYTHON_LOG_DIR'])
+else:
+	fh = logging.FileHandler('twitter_speed.log')
+
+
 fh.setLevel(logging.DEBUG)
 
 
@@ -29,7 +34,7 @@ if os.environ['OPENSHIFT_MONGODB_DB_HOST'] and os.environ['OPENSHIFT_MONGODB_DB_
 	mongodb_port = int(os.environ['OPENSHIFT_MONGODB_DB_PORT'])
 	mongodb_user = 'admin'
 	mongodb_password = '8LtPnFkR6dBp'
-	mongodb_database 'electionspeed'
+	mongodb_database = 'electionspeed'
 
 else:
 	mongodb_host = 'localhost'
