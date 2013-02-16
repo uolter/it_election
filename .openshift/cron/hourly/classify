@@ -2,5 +2,5 @@
 
  source ${VIRTUAL_ENV}/bin/activate
 
- python $£OPENSHIFT_REPO_DIR/crawler/twitter_speed.py
+ python ${OPENSHIFT_REPO_DIR}/crawler/twitter_speed.py
 
