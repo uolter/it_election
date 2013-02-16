@@ -27,18 +27,11 @@ search_for = ['apple', 'microsoft']
 if os.environ['OPENSHIFT_MONGODB_DB_HOST'] and os.environ['OPENSHIFT_MONGODB_DB_PORT']:
 	mongodb_host = os.environ['OPENSHIFT_MONGODB_DB_HOST']
 	mongodb_port = int(os.environ['OPENSHIFT_MONGODB_DB_PORT'])
+	mongodb_user = 'admin'
+	mongodb_password = '8LtPnFkR6dBp'
+	mongodb_database 'electionspeed'
+
 else:
 	mongodb_host = 'localhost'
 	mongodb_port = 27017
 
-"""
-
-MongoDB 2.2 database added.  Please make note of these credentials:
-
-       Root User: admin
-   Root Password: 8LtPnFkR6dBp
-   Database Name: electionspeed
-
-Connection URL: mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
-
-"""	

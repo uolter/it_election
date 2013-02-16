@@ -12,7 +12,9 @@ def save(name, speed, acceleration):
 
 	try:
 
-		db = Connection(settings.mongodb_host, settings.mongodb_port).twitt_speed
+		db = Connection(settings.mongodb_host, settings.mongodb_port)[settings.mongodb_database]
+
+		db.authenticate(settings.mongodb_user, settings.mongodb_password)
 
 		db.record.insert({
 			'name': name,
