@@ -3,15 +3,3 @@
 # available.  Otherwise it will execute while your application is stopped
 # before the deploy step.  This script gets executed directly, so it
 # could be python, php, ruby, etc.
-
-
-source ${OPENSHIFT_RUNTIME_DIR}bin/activate
-
-# Installs Python dependencies
-if [ -f ${OPENSHIFT_REPO_DIR}requirements.txt ];
-then
-    cd ${OPENSHIFT_RUNTIME_DIR}
-    echo "pip install -r requirements.txt ..."
-    rm -fR ${OPENSHIFT_RUNTIME_DIR}src
-    pip install -r ${OPENSHIFT_REPO_DIR}requirements.txt                
-fi
