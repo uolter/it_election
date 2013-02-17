@@ -25,7 +25,7 @@ def save(records):
 		db.records.insert(doc)
 
 	
-		db.records.create_index([("date", DESCENDING))
+		db.records.create_index([("date", DESCENDING)])
 
 	except Exception, e:
 
