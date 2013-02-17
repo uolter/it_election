@@ -81,9 +81,9 @@ if __name__ == '__main__':
         
         logger.debug('messages %d, => speed %f, acceleration %f' %(len(result), speed, acceleration))
 
-        classification[i] = speed
+        classification[i] = (speed, acceleration)
 
-        mongodb.save(i, speed, acceleration)
+    mongodb.save(classification)
 
     logger.info('#' * 50)
     

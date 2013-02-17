@@ -8,23 +8,24 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(settings.fh)
 
 
-def save(name, speed, acceleration):
+def save(records):
 
 	try:
 
 		db = Connection(settings.mongodb_host, settings.mongodb_port)[settings.mongodb_database]
 
-		db.authenticate(settings.mongodb_user, settings.mongodb_password)
+		if settings.mongodb_user:
+			db.authenticate(settings.mongodb_user, settings.mongodb_password)
 
-		db.record.insert({
-			'name': name,
-			'date': datetime.today(),
-			'speed' : speed,
-			'acceleration': acceleration
-		})
+		doc = {'date': datetime.today(), 'stat': []}
+
+		for r in records:
+			doc['stat'].append({'name': r, 'speed': records[r][0], 'acceleration':records[r][1]})
+
+		db.records.insert(doc)
 
 	
-		db.record.create_index([("date", DESCENDING), ("name", ASCENDING)])
+		db.records.create_index([("date", DESCENDING))
 
 	except Exception, e:
 
