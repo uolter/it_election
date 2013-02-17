@@ -1,8 +1,9 @@
-from flask import Flask, make_response
+from flask import Flask, make_response, render_template
 from pymongo import Connection, ASCENDING, DESCENDING
 import settings
 from bson import json_util
 import json
+from utils import json_encoders
 
 DEBUG = True
 
@@ -10,30 +11,13 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 
-def jd(obj):
-    return json.dumps(obj, default=json_util.default)
-
-#
-# Response
-#
-
-def response(data={}, code=200):
-    resp = {
-        "code" : code,
-        "data" : data
-    }
-    response = make_response(jd(resp))
-    response.headers['Status Code'] = resp['code']
-    response.headers['Content-Type'] = "application/json"
-    return response
-
-
-@app.route("/")
-def hello():
+@app.route("/list.json")
+def all():
 
 	db = Connection(settings.mongodb_host, settings.mongodb_port)[settings.mongodb_database]
 
-	# db.authenticate(settings.mongodb_user, settings.mongodb_password)
+	if settings.mongodb_user:
+		db.authenticate(settings.mongodb_user, settings.mongodb_password)
 	
 	'''
 	dataset = db.record.aggregate(
@@ -48,9 +32,26 @@ def hello():
 	)
 	'''
 
-	docs = db.record.find()
+	docs = db.records.find().limit(48)
 	
-	return response(docs[:]) 
+	
+	return str(json.dumps(list(docs), cls=json_encoders.Encoder))
+
+@app.route("/")
+def index():
+
+	db = Connection(settings.mongodb_host, settings.mongodb_port)[settings.mongodb_database]
+
+	if settings.mongodb_user:
+		db.authenticate(settings.mongodb_user, settings.mongodb_password)
+	
+	docs = db.records.find().limit(48)
+
+	#data = json.dumps(list(docs), cls=json_encoders.Encoder)
+	
+	return render_template('index.html', data=docs)
+
+
 
 if __name__ == "__main__":
     app.run()

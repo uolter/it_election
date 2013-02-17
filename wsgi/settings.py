@@ -11,5 +11,6 @@ if os.environ.get('OPENSHIFT_MONGODB_DB_HOST') and os.environ.get('OPENSHIFT_MON
 else:
 	mongodb_host = 'localhost'
 	mongodb_port = 27017
+	mongodb_user = mongodb_password = None	
 
 mongodb_database = 'electionspeed'
