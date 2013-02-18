@@ -20,8 +20,11 @@
           ]);
 
         var options = {
-          title: 'Candidate Performance'
+          title: 'Candidates Twitter Speed popularity (post/mins)  Date: {{time}}',
+          vAxis: {title: '# post'},
+          oAxis: {title: 'time'}
         };
+
 
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
         chart.draw(data, options);
@@ -29,6 +32,12 @@
     </script>
   </head>
   <body>
-    <div id="chart_div" style="width: 900px; height: 500px;"></div>   
+    <div id="chart_div" style="width: 900px; height: 500px;"></div> 
+    <div id='note' style="padding-left:10%">
+        <p>
+          <i>This graph shows the speed - to be intended - as the number of results for each canditate's name <br/>calling the twitter seach api every hour</i>
+        </p>
+    </div>
+
   </body>
 </html>
