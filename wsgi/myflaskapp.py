@@ -24,7 +24,7 @@ def _get_records(deep):
 
 	d=datetime.today()-timedelta(hours = deep)
 
-	return db.records.find({"date": {"$gte":d }})
+	return db.records.find({"date": {"$gte":d }}).sort('date')
 
 
 @app.route("/list.json/<int:deep>")
