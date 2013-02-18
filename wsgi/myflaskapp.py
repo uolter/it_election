@@ -1,10 +1,9 @@
-from flask import Flask, make_response, render_template
-from pymongo import Connection, ASCENDING, DESCENDING
+from flask import Flask, render_template
+from pymongo import Connection
 import settings
-from bson import json_util
 import json
 from utils import json_encoders
-from datetime import datetime
+from datetime import datetime, timedelta
 
 DEBUG = True
 
@@ -22,7 +21,10 @@ def _get_records(deep):
 	if deep == None: 
 		deep = 24
 
-	return db.records.find().limit(int(deep))
+
+	d=datetime.today()-timedelta(hours = deep)
+
+	return db.records.find({"date": {"$gte":d }})
 
 
 @app.route("/list.json/<int:deep>")
@@ -50,6 +52,7 @@ def all(deep=None):
 
 	return str(json.dumps(list(docs), cls=json_encoders.Encoder))
 
+@app.route("/")
 @app.route("/<int:deep>")
 def index(deep=None):
 
@@ -57,6 +60,7 @@ def index(deep=None):
 
 	#data = json.dumps(list(docs), cls=json_encoders.Encoder)
 	
+
 	return render_template('index.html', data=docs, time=datetime.today())
 
 
