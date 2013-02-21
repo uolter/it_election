@@ -28,20 +28,20 @@ def _map_reduce_max_speed():
 
 	db.max_speed.create_index([("value", ASCENDING)])
 
-def _map_reduce_avarage():
+def _map_reduce_average():
 
 	reduce = Code("var reduce_max = function(key, emits) { var adv = 0; emits.forEach(function(val){ adv += val; }); return Number(adv / emits.length).toFixed(2); }")
 
 	# drop the max speed collection:
-	db.avarage.remove()
+	db.average.remove()
 
 	# run nap reduce to compute the max speed for each canditate:
-	result = db.records.map_reduce(_map, reduce, 'avarage')
+	result = db.records.map_reduce(_map, reduce, 'average')
 
 	logger.info('Map Reduce Avarage ok')
 	logger.info(result)
 
-	db.avarage.create_index([("value", ASCENDING)])
+	db.average.create_index([("value", ASCENDING)])
 
 
 
@@ -63,7 +63,7 @@ def save(records):
 
 		_map_reduce_max_speed()
 
-		_map_reduce_avarage()
+		_map_reduce_average()
 
 	except Exception, e:
 
