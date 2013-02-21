@@ -30,7 +30,7 @@ def _map_reduce_max_speed():
 
 def _map_reduce_average():
 
-	reduce = Code("function(key, emits) { var adv = 0; emits.forEach(function(val) { adv += val; }); return adv; }");
+	reduce = Code("function(key, emits) { var adv = 0; emits.forEach(function(val) { adv += val; }); return Number(adv / emits.length).toFixed(2); }");
 
 	# drop the max speed collection:
 	db.average.remove()
