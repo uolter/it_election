@@ -4,6 +4,8 @@
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
+      google.setOnLoadCallback(drawPie);
+
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['time', '{{data[0].stat[0]['name']}}', 
@@ -29,7 +31,38 @@
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
+
+      function drawPie() {
+         var data = google.visualization.arrayToDataTable([
+          ['Candidates', 'Speed'],
+           {% for a in average %}
+            ['{{ a['_id']}}', {{ a['value'] }}], 
+          {% endfor %}      
+        ]);
+
+        var options = {
+          title: 'Average Speed'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('pie_div'));
+        chart.draw(data, options);
+      }
     </script>
+
+    <style type="text/css">
+      #left {
+        float:left;
+        width:300px;
+        padding:10px;
+      }
+      #right {
+        float:right;
+        width:250px;
+        margin-right: 50%;
+        padding:1px;
+      }
+    </style>
+
   </head>
   <body>
     <div id="chart_div" style="width: 900px; height: 500px;"></div> 
@@ -39,12 +72,17 @@
         </p>
     </div>
     <br/>
-    <div id='max_speed' style="padding-left:10%">
-      <h4>Max Speed</h4>
-      {% for s in max_speed %}
-      - <b><span style=" width:80px; display:inline-block;">{{ s['_id'] }}</span></b>: {{ s['value'] }}
-      <br/> 
-      {% endfor %}   
+    <div id='bottom_graph'>
+      <div id='left' style="padding-left:10%">
+        <h4>Max Speed</h4>
+        {% for s in max_speed %}
+          - <b><span style=" width:100px; display:inline-block;">{{ s['_id'] }}</span></b>: {{ s['value'] }}
+          <br/> 
+        {% endfor %}   
+      </div>
+      <div id='right'>
+        <div id="pie_div" style="width: 500px; height: 300px;"></div> 
+      </div>
     </div>
 
   </body>

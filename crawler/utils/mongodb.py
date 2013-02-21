@@ -11,6 +11,40 @@ logger.addHandler(settings.fh)
 
 db = Connection(settings.mongodb_host, settings.mongodb_port)[settings.mongodb_database]
 
+_map = Code("function() { var max = 0; var name = ''; this.stat.forEach(function(val) { emit(val.name, val.speed); }); }")
+
+def _map_reduce_max_speed():
+
+	reduce = Code("function(key, emits) { db.mr_log.insert({'message': 'reduce key ' + key + ' emits: ' + emits}); var max = emits[0]; emits.forEach(function(val){ if (val > max) max = val; }); return max; } ")
+
+	# drop the max speed collection:
+	db.max_speed.remove()
+
+	# run nap reduce to compute the max speed for each canditate:
+	result = db.records.map_reduce(_map, reduce, 'max_speed')
+
+	logger.info('Map Reduce Max Speed ok')
+	logger.info(result)
+
+	db.max_speed.create_index([("value", ASCENDING)])
+
+def _map_reduce_avarage():
+
+	reduce = Code("var reduce_max = function(key, emits) { var adv = 0; emits.forEach(function(val){ adv += val; }); return Number(adv / emits.length).toFixed(2); }")
+
+	# drop the max speed collection:
+	db.avarage.remove()
+
+	# run nap reduce to compute the max speed for each canditate:
+	result = db.records.map_reduce(_map, reduce, 'avarage')
+
+	logger.info('Map Reduce Avarage ok')
+	logger.info(result)
+
+	db.avarage.create_index([("value", ASCENDING)])
+
+
+
 def save(records):
 
 	try:
@@ -25,27 +59,17 @@ def save(records):
 
 		db.records.insert(doc)
 
-
 		db.records.create_index([("date", DESCENDING)])
 
-		# drop the max speed collection:
-		db.max_speed.remove()
+		_map_reduce_max_speed()
 
-		# run nap reduce to compute the max speed for each canditate:
-		result = db.records.map_reduce(_map, _reduce, 'max_speed')
-
-		logger.info('Map Reduce ok')
-		logger.info(result)
-
-		db.max_speed.create_index([("value", ASCENDING)])
-
-
+		_map_reduce_avarage()
 
 	except Exception, e:
 
 		logger.error(e)
 
-_map = Code("function() { var max = 0; var name = ''; this.stat.forEach(function(val) { emit(val.name, val.speed); }); }")
 
-_reduce = Code("function(key, emits) { db.mr_log.insert({'message': 'reduce key ' + key + ' emits: ' + emits}); var max = emits[0]; emits.forEach(function(val){ if (val > max) max = val; }); return max; } ")
+
+
 
