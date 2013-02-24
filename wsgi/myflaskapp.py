@@ -13,7 +13,6 @@ app.config.from_object(__name__)
 _db = Connection(settings.mongodb_host, settings.mongodb_port)[settings.mongodb_database]
 def _get_records(deep):
 
-
 	if settings.mongodb_user:
 		_db.authenticate(settings.mongodb_user, settings.mongodb_password)
 
@@ -57,7 +56,6 @@ def index(deep=None):
 		time=datetime.today(),
 		max_speed = max_speed,
 		average = average)
-
 
 
 if __name__ == "__main__":
