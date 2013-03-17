@@ -7,10 +7,11 @@ Created on Jun 29, 2012
 import logging
 import os
 
-consumer_key = 'vquiabfT8GjCAnrQcOPkbQ'
-consumer_secret = 'DSfhhVcMVI0AAfCumYWECyO9J6Ikagy7cjPmYcazU'
-access_token = '32822337-BXc7x6zQ9j72rugwHKHFgFDmuyJSVjOITplZHY5vx'
-access_token_secret = '8JIvAPV6GgGm2VjcpZWolMs7XdvviH4FAFgHl0wRUHM'
+# twitter account: place here your twitter account
+consumer_key = ''
+consumer_secret = ''
+access_token = ''
+access_token_secret = ''
 
 if os.environ.get('OPENSHIFT_PYTHON_LOG_DIR'):
 	fh = logging.FileHandler('%stwitter_speed.log' %os.environ['OPENSHIFT_PYTHON_LOG_DIR'])
