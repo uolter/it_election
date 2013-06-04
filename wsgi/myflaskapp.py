@@ -17,7 +17,7 @@ def _get_records(deep):
 		_db.authenticate(settings.mongodb_user, settings.mongodb_password)
 
 	if deep == None: 
-		deep = 24
+	    return _db.records.find().sort('date')
 
 	d=datetime.today()-timedelta(hours = deep)
 
